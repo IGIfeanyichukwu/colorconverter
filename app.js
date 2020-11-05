@@ -65,7 +65,7 @@ function rgbToCmyk(r, g, b) {
 
 	let res = [c, m, y, k];
 
-	console.log(res);	
+	return res;	
 }
 
 
@@ -113,7 +113,7 @@ function rgbToHsv(r, g, b) {
 	s = Number(s.toFixed(2));
 	v = Number(v.toFixed(2));
 
-	console.log(h, s, v);
+	return [h, s, v];
 
 }
 
@@ -161,7 +161,7 @@ function rgbToHsl(r, g, b) {
 	l = Number(l.toFixed(2));
 
 
-	console.log(h, s, l);
+	return [h, s, l];
 
 }
 
@@ -388,20 +388,69 @@ for (let i = 0; i < selectorBtnArray.length; i++){
 
 
 
-//handling conversion
+//handling FROM RGB conversion
 
 rgbConvertBtn.onclick = function (e) {
 	let redVal = parseInt(rgbRedInput.value);
 	let greenVal = parseInt(rgbGreenInput.value);
 	let blueVal = parseInt(rgbBlueInput.value);
+	let hexVal, cmykVal, hslVal, hsvVal;
 
-	console.log(redVal, greenVal, blueVal);
 
-	if (redVal < 0 || redVal > 255 || 
-		greenVal < 0 || greenVal > 255 || 
-		blueVal < 0 || blueVal > 255) {
+	if (redVal < 0 || redVal > 255 || !redVal ||
+		greenVal < 0 || greenVal > 255 || !greenVal ||
+		blueVal < 0 || blueVal > 255 || !blueVal) {
 		console.log('The RGB Value is invalid. It should be between 0 and 255');
+	} else {
+		hexVal = rgbToHex(redVal, greenVal, blueVal);
+		cmykVal = rgbToCmyk(redVal, greenVal, blueVal);
+		hslVal = rgbToHsl(redVal, greenVal, blueVal);
+		hsvVal = rgbToHsv(redVal, greenVal, blueVal);
+
+		// console.log(hexVal, cmykVal, hslVal, hsvVal);
+		rgbOutputs.innerHTML = ` 
+
+			<h5>CONVERTED COLOR VALUES</h5>
+
+			<table>
+			<thead>
+			<td>Model</td>
+			<td>Value</td>
+			</thead>
+			<tbody>
+			<tr>
+				<td><b>HEX: </b></td>  
+				<td>${hexVal}</td>
+			</tr>
+			<tr>
+				<td><b>CMYK: </b></td> 
+				<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+			</tr>
+			<tr>
+				<td><b>HSL: </b></td> 
+				<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+			</tr>
+				<td><b>HSV = HSB: </b></td> 
+				<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+			</tbody>
+			</table>
+
+			<div class="color-box" style="background: rgb(${redVal}, ${greenVal}, ${blueVal}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+		`;
+
 	}
 
 }
 
+rgbResetBtn.onclick = function(e) {
+	rgbRedInput.value = '';
+	rgbGreenInput.value = '';
+	rgbBlueInput.value = '';
+
+	rgbOutputs.innerHTML = '';
+}
+
+
+//handling FROM HEX conversion
