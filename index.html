@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Color Converter</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h2>Color Converter</h2>
+			<p><small>..convert color between different color models</small></p>
+		</header>
+		<div class="main">
+			<div class="section-selector">
+				<button id="rgb-section-btn">RGB</button>
+				<button id="hex-section-btn">HEX</button>
+				<button id="cmyk-section-btn">CMYK</button>
+				<button id="hsl-section-btn">HSL</button>
+				<button id="hsv-section-btn">HSV</button>
+			</div>			
+
+			<div id="rgb-conversion-box" class="rgb-conversion-box make-section-visible">
+				<h4>Convert from RGB</h4>
+				<div class="rgb-cb-inputs">
+					<div class="rgb-red-input">
+						<input type="number" min="0" max="255" maxlength="3">
+					</div>
+					<div class="rgb-green-input">
+						<input type="number" min="0" max="255" maxlength="3">
+					</div>
+					<div class="rgb-blue-input">
+						<input type="number" min="0" max="255" maxlength="3">
+					</div>
+				</div>
+
+				<div class="rgb-cb-convert-btn-wrap">
+					<button class="rgb-cb-convert-btn">Convert</button>
+					<button class="rgb-cb-reset-btn">Reset</button>
+				</div>
+
+				<div class="rgb-cb-outputs-wrap">
+					<h5>CONVERTED COLOR VALUES</h5>
+					<div class="rgb-cb-outputs"></div>
+				</div>
+				
+			</div>
+
+			<div id="hex-conversion-box" class="hex-conversion-box">
+				<h4>Convert from HEX</h4>
+				<div class="hex-cb-inputs">
+					<div class="hex-single-input">
+						<label>#</label><input type="text" maxlength="6" minlength="6" min="0" max="255">
+					</div>
+				</div>
+
+				<div class="hex-cb-convert-btn-wrap">
+					<button class="hex-cb-convert-btn">Convert</button>
+					<button class="hex-cb-reset-btn">Reset</button>
+				</div>
+
+				<div class="hex-cb-outputs-wrap">
+					<h5>CONVERTED COLOR VALUES</h5>
+					<div class="hex-cb-outputs"></div>
+				</div>
+				
+				
+			</div>
+
+			<div id="cmyk-conversion-box" class="cmyk-conversion-box">
+				<h4>Convert from CMYK</h4>
+				<div class="cmyk-cb-inputs">
+					<div class="cmyk-cyan-input">
+						<input type="number" min="0" max="100">
+					</div>
+					<div class="cmyk-magenta-input">
+						<input type="number" min="0" max="100">
+					</div>
+					<div class="cmyk-yellow-input">
+						<input type="number" min="0" max="100">
+					</div>
+					<div class="cmyk-black-input">
+						<input type="number" min="0" max="100">
+					</div>
+				</div>
+
+				<div class="cmyk-cb-convert-btn-wrap">
+					<button class="cmyk-cb-convert-btn">Convert</button>
+					<button class="cmyk-cb-reset-btn">Reset</button>
+				</div>
+
+				<div class="cmyk-cb-outputs-wrap">
+					<h5>CONVERTED COLOR VALUES</h5>
+					<div class="cmyk-cb-outputs"></div>
+				</div>
+				
+			</div>
+
+			<div id="hsl-conversion-box" class="hsl-conversion-box">
+				<h4>Convert from HSL</h4>
+				<div class="hsl-cb-inputs">
+					<div class="hsl-hue-input">
+						<input type="number" min="0" max="360">
+					</div>
+					<div class="hsl-saturation-input">
+						<input type="number" min="0" max="100">
+					</div>
+					<div class="hsl-lightness-input">
+						<input type="number" min="0" max="100">
+					</div>
+				</div>
+
+				<div class="hsl-cb-convert-btn-wrap">
+					<button class="hsl-cb-convert-btn">Convert</button>
+					<button class="hsl-cb-reset-btn">Reset</button>
+				</div>
+
+				<div class="hsl-cb-outputs-wrap">
+					<h5>CONVERTED COLOR VALUES</h5>
+					<div class="hsl-cb-outputs"></div>
+				</div>
+				
+			</div>
+
+			<div id="hsv-conversion-box" class="hsv-conversion-box">
+				<h4>Convert from HSV</h4>
+				<div class="hsv-cb-inputs">
+					<div class="hsv-hue-input">
+						<input type="number" min="0" max="360">
+					</div>
+					<div class="hsv-saturation-input">
+						<input type="number" min="0" max="100">
+					</div>
+					<div class="hsv-value-input">
+						<input type="number" min="0" max="100">
+					</div>
+				</div>
+
+				<div class="hsv-cb-convert-btn-wrap">
+					<button class="hsv-cb-convert-btn">Convert</button>
+					<button class="hsv-cb-reset-btn">Reset</button>
+				</div>
+
+				<div class="hsv-cb-outputs-wrap">
+					<h5>CONVERTED COLOR VALUES</h5>
+					<div class="hsv-cb-outputs"></div>
+				</div>
+			
+			</div>
+
+		</div>
+		
+	</div>	 
+
+	<script src="app.js" defer></script>
+</body>
+</html>

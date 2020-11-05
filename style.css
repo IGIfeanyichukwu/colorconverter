@@ -1,0 +1,201 @@
+@font-face {
+    font-family: ibmplexsans;
+    src: url('./ibmplexsans-regular.ttf');
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--pri-font: ibmplexsans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-size: 1.6rem;
+	font-family: var(--pri-font);
+}
+
+.rgb-red-input::before {
+	content: 'RED';
+}
+
+.rgb-green-input::before {
+	content: 'GREEN';
+}
+
+.rgb-blue-input::before {
+	content: 'BLUE';
+}
+
+.cmyk-cyan-input:before {
+	content: 'CYAN';
+}
+
+.cmyk-magenta-input:before {
+	content: 'MAGENTA';
+}
+
+.cmyk-yellow-input:before {
+	content: 'YELLOW';
+}
+
+.cmyk-black-input:before {
+	content: 'BLACK';
+}
+
+.hsl-hue-input:before {
+	content: 'HUE';
+}
+
+.hsl-saturation-input:before {
+	content: 'SATURATION';
+}
+
+.hsl-lightness-input:before {
+	content: 'LIGHTNESS';
+}
+
+.hsv-hue-input:before {
+	content: 'HUE';
+}
+
+.hsv-saturation-input:before {
+	content: 'SATURATION';
+}
+
+.hsv-value-input:before {
+	content: 'VALUE';
+}
+
+
+
+.rgb-red-input::after, 
+.rgb-green-input::after, 
+.rgb-blue-input::after {
+	content: '[0 - 255]';
+}
+
+.cmyk-cyan-input:after,
+.cmyk-magenta-input:after,
+.cmyk-yellow-input:after,
+.cmyk-black-input:after,
+.hsl-saturation-input:after,
+.hsl-lightness-input:after,
+.hsv-saturation-input:after,
+.hsv-value-input:after
+{
+	content: '[0 - 100]';
+}
+
+.hsl-hue-input:after,
+.hsv-hue-input:after
+{
+	content: '[0 - 360]';
+}
+
+.rgb-red-input,
+.rgb-green-input, 
+.rgb-blue-input,
+.cmyk-cyan-input,
+.cmyk-magenta-input,
+.cmyk-yellow-input,
+.cmyk-black-input,
+.hsl-hue-input,
+.hsl-saturation-input,
+.hsl-lightness-input,
+.hsv-hue-input,
+.hsv-saturation-input,
+.hsv-value-input
+{
+	/*background: green;*/
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	position: relative;
+	width: calc(6rem + 2rem);
+}
+
+.rgb-red-input::before, 
+.rgb-green-input::before, 
+.rgb-blue-input::before,
+.cmyk-cyan-input::before,
+.cmyk-magenta-input::before,
+.cmyk-yellow-input::before,
+.cmyk-black-input::before,
+.hsl-hue-input:before,
+.hsl-saturation-input:before,
+.hsl-lightness-input:before,
+.hsv-hue-input:before,
+.hsv-saturation-input:before,
+.hsv-value-input:before
+{
+	position: relative;
+	/*background: orange;*/
+	display: block;
+	top: 0;
+	text-align: center;
+	font-size: 1rem;
+}
+
+.rgb-red-input:after, 
+.rgb-green-input:after, 
+.rgb-blue-input:after,
+.cmyk-cyan-input::after,
+.cmyk-magenta-input::after,
+.cmyk-yellow-input::after,
+.cmyk-black-input::after,
+.hsl-hue-input:after,
+.hsl-saturation-input:after,
+.hsl-lightness-input:after,
+.hsv-hue-input:after,
+.hsv-saturation-input:after,
+.hsv-value-input:after
+
+{
+	display: block;
+	position: relative;
+	/*background: pink;*/
+	font-size: 1rem;
+	text-align: center;
+}
+
+.rgb-red-input input[type="number"], 
+.rgb-green-input input[type="number"], 
+.rgb-blue-input input[type="number"],
+.cmyk-cyan-input input[type="number"],
+.cmyk-magenta-input input[type="number"],
+.cmyk-yellow-input input[type="number"],
+.cmyk-black-input input[type="number"],
+.hsl-hue-input input[type="number"],
+.hsl-saturation-input input[type="number"],
+.hsl-lightness-input input[type="number"],
+.hsv-hue-input input[type="number"],
+.hsv-saturation-input input[type="number"],
+.hsv-value-input input[type="number"]
+{
+	width: 6rem;
+	text-align: center;
+	padding: 0.5rem;
+	border-radius: 0.3rem;
+	border: none;
+	background: #eee;
+}
+
+
+/*.rgb-conversion-box, 
+.hex-conversion-box, 
+.cmyk-conversion-box, 
+.hsl-conversion-box, 
+.hsv-conversion-box {
+	display: none;
+}
+*/
+.make-section-visible {
+	display: block !important;
+}
