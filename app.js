@@ -41,7 +41,9 @@ function hexToRgb(hex) {
 	g = hexToDec(g);
 	b = hexToDec(b);
 
-	console.log(`rgb(${r}, ${g}, ${b})`);
+	// console.log(`rgb(${r}, ${g}, ${b})`);
+
+	return [r, g, b];
 
 }
 
@@ -88,7 +90,6 @@ function rgbToHsv(r, g, b) {
 
 	if (max == min) {
 		h = 0; //achromatic
-	console.log(h);
 	} else {
 		switch (max) {
 			case r:
@@ -187,7 +188,7 @@ function cmykToRgb(c, m, y, k) {
 	g = Math.round(255 * g);
 	b = Math.round(255 * b);
 
-	console.log(r, g, b);
+	return [r, g, b];
 
 }
 
@@ -248,7 +249,7 @@ function hsvToRgb(h, s, v) {
 	g = Math.round(255 * g);
 	b = Math.round(255 * b);
 
-	console.log(r, g, b);
+	return [r, g, b];
 
 }
 
@@ -289,12 +290,10 @@ function hslToRgb(h, s , l) {
 	g = Math.round((g + m) * 255);
 	b = Math.round((b + m) * 255);
 
-	console.log(r, g, b);
+
+	return [r, g, b];
 
 }
-
-
-hslToRgb('24', '10', '35');
 
 //get section selector buttons
 const rbBtn = document.getElementById('rgb-section-btn');
@@ -397,9 +396,10 @@ rgbConvertBtn.onclick = function (e) {
 	let hexVal, cmykVal, hslVal, hsvVal;
 
 
-	if (redVal < 0 || redVal > 255 || !redVal ||
-		greenVal < 0 || greenVal > 255 || !greenVal ||
-		blueVal < 0 || blueVal > 255 || !blueVal) {
+	if (redVal < 0 || redVal > 255 || (!redVal && redVal != 0) ||
+		greenVal < 0 || greenVal > 255 || (!greenVal && greenVal != 0) ||
+		blueVal < 0 || blueVal > 255 || (!blueVal && blueVal != 0)) {
+		rgbOutputs.innerHTML = '';
 		console.log('The RGB Value is invalid. It should be between 0 and 255');
 	} else {
 		hexVal = rgbToHex(redVal, greenVal, blueVal);
@@ -454,3 +454,274 @@ rgbResetBtn.onclick = function(e) {
 
 
 //handling FROM HEX conversion
+hexConvertBtn.onclick = function(e) {
+
+	let hexVal = hexSingleInput.value,
+
+	rgbVal, cmykVal, hslVal, hsvVal,
+
+	testPattern = /[g-z]|\W|_/ig,
+
+	regTest = testPattern.test(hexVal);
+
+	if(regTest || hexVal.length != 6) {
+		console.log('The Hex Value is invalid. It should be between 0 and 9, A-F and have a length of 6!');
+	} else {
+		rgbVal = hexToRgb(hexVal);
+		cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+		hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+		hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+		hexOutputs.innerHTML = ` 
+
+			<h5>CONVERTED COLOR VALUES</h5>
+
+			<table>
+			<thead>
+			<td>Model</td>
+			<td>Value</td>
+			</thead>
+			<tbody>
+			<tr>
+				<td><b>RGB: </b></td>  
+				<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]}</td>
+			</tr>
+			<tr>
+				<td><b>CMYK: </b></td> 
+				<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+			</tr>
+			<tr>
+				<td><b>HSL: </b></td> 
+				<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+			</tr>
+				<td><b>HSV = HSB: </b></td> 
+				<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+			</tbody>
+			</table>
+
+			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+		`;
+
+	}
+
+
+}
+
+hexResetBtn.onclick = function(e) {
+	hexSingleInput.value = '';
+
+	hexOutputs.innerHTML = ''; 
+}
+
+
+//handling FROM CMYK conversion
+
+cmykConvertBtn.onclick = function(e) {
+	let cyanVal = parseInt(cmykCyanInput.value);
+	let magentaVal = parseInt(cmykMagentaInput.value);
+	let yellowVal = parseInt(cmykYellowInput.value);
+	let blackVal = parseInt(cmykBlackInput.value);
+	let rgbVal, hexVal, hslVal, hsvVal;
+
+	
+
+	if (cyanVal < 0 || cyanVal > 100 || (!cyanVal && cyanVal != 0) ||
+		magentaVal < 0 || magentaVal > 100 || (!magentaVal && magentaVal != 0) ||
+		yellowVal < 0 || yellowVal > 100 || (!yellowVal && yellowVal != 0) || 
+		blackVal < 0 || blackVal > 100 || (!blackVal && blackVal != 0)) {
+		cmykOutputs.innerHTML = '';
+
+		console.log('The CMYK Value is invlaid. It should be between 0 and 100%.');
+	} else {
+
+		rgbVal = cmykToRgb(cyanVal, magentaVal, yellowVal, blackVal);
+		hexVal = rgbToHex(rgbVal[0], rgbVal[1], rgbVal[2]);
+		hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+		hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+		// console.log(rgbVal, hexVal, hslVal, hsvVal);
+
+		cmykOutputs.innerHTML = ` 
+
+			<h5>CONVERTED COLOR VALUES</h5>
+
+			<table>
+			<thead>
+			<td>Model</td>
+			<td>Value</td>
+			</thead>
+			<tbody>
+			<tr>
+				<td><b>RGB: </b></td>  
+				<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]}</td>
+			</tr>
+			<tr>
+				<td><b>HEX: </b></td> 
+				<td>${hexVal}</td>
+			</tr>
+			<tr>
+				<td><b>HSL: </b></td> 
+				<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+			</tr>
+				<td><b>HSV = HSB: </b></td> 
+				<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+			</tbody>
+			</table>
+
+			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+		`;
+	}
+
+
+}
+
+
+cmykResetBtn.onclick = function(e) {
+	cmykCyanInput.value = '';
+	cmykMagentaInput.value = '';
+	cmykYellowInput.value = '';
+	cmykBlackInput.value = '';
+
+	cmykOutputs.innerHTML = '';
+}
+
+//handling FROM HSL conversion
+
+hslConvertBtn.onclick = function (e) {
+	let hueVal = parseInt(hslHueInput.value);
+	let saturationVal = parseInt(hslSaturationInput.value);
+	let lightnessVal = parseInt(hslLightnessInput.value);
+	let rgbVal, hexVal, cmykVal, hsvVal;
+
+
+	if (hueVal < 0 || hueVal > 360 || (!hueVal && hueVal != 0) ||
+		saturationVal < 0 || saturationVal > 100 || (!saturationVal && saturationVal != 0) ||
+		lightnessVal < 0 || lightnessVal > 100 || (!lightnessVal && lightnessVal != 0)) {
+			hslOutputs.innerHTML = '';
+
+		console.log('The HSL Value is invalid. It should be between 0 and 100 for Saturation and Lightness and between 0 and 360 for Hue.');
+	} else {
+		rgbVal = hslToRgb(hueVal, saturationVal, lightnessVal);
+		hexVal = rgbToHex(rgbVal[0], rgbVal[1], rgbVal[2]);
+		cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+		hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+		// console.log(hexVal, cmykVal, hslVal, hsvVal);
+		hslOutputs.innerHTML = ` 
+
+			<h5>CONVERTED COLOR VALUES</h5>
+
+			<table>
+			<thead>
+			<td>Model</td>
+			<td>Value</td>
+			</thead>
+			<tbody>
+			<tr>
+				<td><b>RGB: </b></td> 
+				<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]} </td>
+			</tr>
+			<tr>
+				<td><b>HEX: </b></td>  
+				<td>${hexVal}</td>
+			</tr>
+			<tr>
+				<td><b>CMYK: </b></td> 
+				<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+			</tr>
+				<td><b>HSV = HSB: </b></td> 
+				<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+			</tbody>
+			</table>
+
+			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+		`;
+
+	}
+
+}
+
+hslResetBtn.onclick = function(e) {
+	hslHueInput.value = '';
+	hslSaturationInput.value = '';
+	hslLightnessInput.value = '';
+
+	hslOutputs.innerHTML = '';
+
+}
+
+
+
+//handling FROM HSV conversion
+
+hsvConvertBtn.onclick = function(e) {
+
+	let hueVal = parseInt(hsvHueInput.value);
+	let saturationVal = parseInt(hsvSaturationInput.value);
+	let valueVal = parseInt(hsvValueInput.value);
+	let rgbVal, hexVal, cmykVal, hslVal;
+
+
+	if (hueVal < 0 || hueVal > 360 || (!hueVal && hueVal != 0) ||
+		saturationVal < 0 || saturationVal > 100 || (!saturationVal && saturationVal != 0) ||
+		valueVal < 0 || valueVal > 100 || (!valueVal && valueVal != 0)) {
+		hsvOutputs.innerHTML = '';
+		console.log('The HSV Value is invalid. It should be between 0 and 100 for Saturation and Lightness and between 0 and 360 for Hue.');
+	} else {
+		rgbVal = hsvToRgb(hueVal, saturationVal, valueVal);
+		hexVal = rgbToHex(rgbVal[0], rgbVal[1], rgbVal[2]);
+		cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+		hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+		// console.log(hexVal, cmykVal, hslVal, hsvVal);
+		hsvOutputs.innerHTML = ` 
+
+			<h5>CONVERTED COLOR VALUES</h5>
+
+			<table>
+			<thead>
+			<td>Model</td>
+			<td>Value</td>
+			</thead>
+			<tbody>
+			<tr>
+				<td><b>RGB: </b></td> 
+				<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]} </td>
+			</tr>
+			<tr>
+				<td><b>HEX: </b></td>  
+				<td>${hexVal}</td>
+			</tr>
+			<tr>
+				<td><b>CMYK: </b></td> 
+				<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+			</tr>
+				<td><b>HSL: </b></td> 
+				<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+			</tbody>
+			</table>
+
+			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+		`;
+
+	}
+}
+
+
+hsvResetBtn.onclick = function(e) {
+
+	hsvHueInput.value = '';
+	hsvSaturationInput.value = '';
+	hsvValueInput.value = '';
+
+	hsvOutputs.innerHTML = '';
+
+}
