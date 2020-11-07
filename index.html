@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<title>Color Converter</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Color Converter</title>
+	<meta name="description" content="Color Converter converts color values between color models such as RGB, HEX, CMYK, HSL, HSV and HSB. Developed by Ifeanyichukwu Gideon Idoko (Ifex).">
+
+	<meta name="keywords" content="color converter convert value model web app color-converter color-model rgb hex cmyk hsl hsv hsb" >
+
+	<link rel="stylesheet" href="./toastify/toastify.css">
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<div class="container">
 		<header>
-			<h2 class="site-title"><span>Color</span> Converter</h2>
-			<p><small>..convert color between different color models</small></p>
+			<h1 class="site-title">C<span>o</span>lor Converter</h1>
+			<p><small>..convert color values between different color models</small></p>
 		</header>
 		<div class="main">
 			<div class="section-selector">
-				<button id="rgb-section-btn">RGB</button>
+				<button id="rgb-section-btn" class="current-selector-btn">RGB</button>
 				<button id="hex-section-btn">HEX</button>
 				<button id="cmyk-section-btn">CMYK</button>
 				<button id="hsl-section-btn">HSL</button>
@@ -40,9 +45,22 @@
 					<button class="rgb-cb-reset-btn">Reset</button>
 				</div>
 
+				<div class="or-separator">
+					<span>OR</span>
+				</div>
+
+				<div class="rgb-color-picker-wrap">
+					<input type="color" name="" id="rgb-color-picker-input">
+					<label class="rgb-color-picker" for="rgb-color-picker-input"><img src="eye-dropper.svg" alt="color picker"></label>
+				</div>
+
 				<div class="rgb-cb-outputs-wrap">
 					
-					<div class="rgb-cb-outputs"></div>
+					<div class="rgb-cb-outputs outputs"></div>
+				</div>
+
+				<div class="extra-info">
+					<p><small>Hue will be UNDEFINED if saturation is 0 (Achromatic colors). In other words, if R = G = B, Hue will be UNDEFINED and Saturation will equal 0. i.e HSV = HSL = HSB. </small></p>
 				</div>
 				
 			</div>
@@ -60,12 +78,23 @@
 					<button class="hex-cb-reset-btn">Reset</button>
 				</div>
 
+				<div class="or-separator">
+					<span>OR</span>
+				</div>
+
+				<div class="hex-color-picker-wrap">
+					<input type="color" name="" id="hex-color-picker-input">
+					<label class="hex-color-picker" for="hex-color-picker-input"><img src="eye-dropper.svg" alt="color picker"></label>
+				</div>
+
 				<div class="hex-cb-outputs-wrap">
 					
-					<div class="hex-cb-outputs"></div>
+					<div class="hex-cb-outputs outputs"></div>
 				</div>
 				
-				
+				<div class="extra-info">
+					<p><small>Hue will be UNDEFINED if saturation is 0 (Achromatic colors). In other words, if R = G = B, Hue will be UNDEFINED and Saturation will equal 0. i.e HSV = HSL = HSB. </small></p>
+				</div>
 			</div>
 
 			<div id="cmyk-conversion-box" class="cmyk-conversion-box">
@@ -90,11 +119,25 @@
 					<button class="cmyk-cb-reset-btn">Reset</button>
 				</div>
 
+				<div class="or-separator">
+					<span>OR</span>
+				</div>
+
+				<div class="cmyk-color-picker-wrap">
+					<input type="color" name="" id="cmyk-color-picker-input">
+					<label class="cmyk-color-picker" for="cmyk-color-picker-input"><img src="eye-dropper.svg" alt="color picker"></label>
+				</div>
+
 				<div class="cmyk-cb-outputs-wrap">
 					
-					<div class="cmyk-cb-outputs"></div>
+					<div class="cmyk-cb-outputs outputs"></div>
 				</div>
 				
+				<div class="extra-info">
+					<p><small>Hue will be UNDEFINED if saturation is 0 (Achromatic colors). In other words, if R = G = B, Hue will be UNDEFINED and Saturation will equal 0. i.e HSV = HSL = HSB. </small></p>
+
+					<p><small>Just like language translation, color conversion is not always a straight-forward one-to-one mapping. Specifically, RGB has less degrees of freedom (3) than CMYK (4). Therefore, although one can convert any RGB to CMYK without losing information, the inverse is not the case. When a CMYK color is converted to RGB, some information is lost. When you convert that RGB color back to CMYK, you will in most cases get a different (but similar) color.</small></p>
+				</div>
 			</div>
 
 			<div id="hsl-conversion-box" class="hsl-conversion-box">
@@ -116,10 +159,22 @@
 					<button class="hsl-cb-reset-btn">Reset</button>
 				</div>
 
+				<div class="or-separator">
+					<span>OR</span>
+				</div>
+
+				<div class="hsl-color-picker-wrap">
+					<input type="color" name="" id="hsl-color-picker-input">
+					<label class="hsl-color-picker" for="hsl-color-picker-input"><img src="eye-dropper.svg" alt="color picker"></label>
+				</div>
+
 				<div class="hsl-cb-outputs-wrap">
-					<div class="hsl-cb-outputs"></div>
+					<div class="hsl-cb-outputs outputs"></div>
 				</div>
 				
+				<div class="extra-info">
+					<p><small>Hue will be UNDEFINED if saturation is 0 (Achromatic colors). In other words, if R = G = B, Hue will be UNDEFINED and Saturation will equal 0. i.e HSV = HSL = HSB. </small></p>
+				</div>
 			</div>
 
 			<div id="hsv-conversion-box" class="hsv-conversion-box">
@@ -141,16 +196,30 @@
 					<button class="hsv-cb-reset-btn">Reset</button>
 				</div>
 
+				<div class="or-separator">
+					<span>OR</span>
+				</div>
+
+				<div class="hsv-color-picker-wrap">
+					<input type="color" name="" id="hsv-color-picker-input">
+					<label class="hsv-color-picker" for="hsv-color-picker-input"><img src="eye-dropper.svg" alt="color picker"></label>
+				</div>
+
 				<div class="hsv-cb-outputs-wrap">
-					<div class="hsv-cb-outputs"></div>
+					<div class="hsv-cb-outputs outputs"></div>
+				</div>
+
+				<div class="extra-info">
+					<p><small>Hue will be UNDEFINED if saturation is 0 (Achromatic colors). In other words, if R = G = B, Hue will be UNDEFINED and Saturation will equal 0. i.e HSV = HSL = HSB. </small></p>
 				</div>
 			
 			</div>
 
 		</div>
-		
+		<p class="footer"><small><b>&lt;/&gt;</b> with ❤️ | <a href="https://ig-ifex.netlify.app" target="_blank" rel="noreferer noopener">IFEX</a></small></p>
 	</div>	 
 
+	<script src="./toastify/toastify.js" defer></script>
 	<script src="app.js" defer></script>
 </body>
 </html>

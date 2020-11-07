@@ -361,7 +361,46 @@ const cmykOutputs = document.querySelector('.cmyk-cb-outputs');
 const hslOutputs = document.querySelector('.hsl-cb-outputs');
 const hsvOutputs = document.querySelector('.hsv-cb-outputs');
 
+//get all color inputs
 
+const rgbColorPickerInput = document.getElementById('rgb-color-picker-input');
+const hexColorPickerInput = document.getElementById('hex-color-picker-input');
+const cmykColorPickerInput = document.getElementById('cmyk-color-picker-input');
+const hslColorPickerInput = document.getElementById('hsl-color-picker-input');
+const hsvColorPickerInput = document.getElementById('hsv-color-picker-input');
+
+//get all color pickers
+const rgbColorPicker = document.querySelector('.rgb-color-picker');
+const hexColorPicker = document.querySelector('.hex-color-picker');
+const cmykColorPicker = document.querySelector('.cmyk-color-picker');
+const hslColorPicker = document.querySelector('.hsl-color-picker');
+const hsvColorPicker = document.querySelector('.hsv-color-picker');
+
+// console.log(rgbColorPickerInput, hexColorPickerInput, cmykColorPickerInput, hslColorPickerInput, hsvColorPickerInput);
+
+//get the main container element
+const mainContainer = document.querySelector('.container');
+
+
+rgbRedInput.value = '';
+rgbGreenInput.value = '';
+rgbBlueInput.value = '';
+hexSingleInput.value = '';
+cmykCyanInput.value = '';
+cmykMagentaInput.value = '';
+cmykYellowInput.value = '';
+cmykBlackInput.value = '';
+hslHueInput.value = '';
+hslSaturationInput.value = '';
+hslLightnessInput.value = '';
+hsvHueInput.value = '';
+hsvSaturationInput.value = '';
+hsvValueInput.value = '';
+rgbColorPickerInput.value = '';
+hexColorPickerInput.value = '';
+cmykColorPickerInput.value = '';
+hslColorPickerInput.value = '';
+hsvColorPickerInput.value = '';
 
 //array of all section selectors
 let selectorBtnArray = [rbBtn, hxBtn, ckBtn, hlBtn, hvBtn];
@@ -379,6 +418,56 @@ for (let i = 0; i < selectorBtnArray.length; i++){
 		})
 
 		e.target.classList.add('current-selector-btn');
+		// console.log(e.target.id);
+		switch(e.target.id) {
+
+			case 'rgb-section-btn':
+				const rgbCurrentColor = document.getElementById('rgb-current-color');
+				if(rgbCurrentColor != null) {
+					mainContainer.style.borderColor = `${rgbCurrentColor.value}`;
+
+				} else {
+					mainContainer.style.borderColor = `black`;
+				}
+				break;
+			case 'hex-section-btn':
+				const hexCurrentColor = document.getElementById('hex-current-color');
+				if(hexCurrentColor != null) {
+					mainContainer.style.borderColor = `${hexCurrentColor.value}`;
+
+				} else {
+					mainContainer.style.borderColor = `black`;
+				}
+				break;
+			case 'cmyk-section-btn':
+				const cmykCurrentColor = document.getElementById('cmyk-current-color');
+				if(cmykCurrentColor != null) {
+					mainContainer.style.borderColor = `${cmykCurrentColor.value}`;
+
+				} else {
+					mainContainer.style.borderColor = `black`;
+					
+				}
+				break;
+			case 'hsl-section-btn':
+				const hslCurrentColor = document.getElementById('hsl-current-color');
+				if(hslCurrentColor != null) {
+					mainContainer.style.borderColor = `${hslCurrentColor.value}`;
+				} else {
+					mainContainer.style.borderColor = `black`;
+					
+				}
+				break;
+			case 'hsv-section-btn':
+				const hsvCurrentColor = document.getElementById('hsv-current-color');
+				if(hsvCurrentColor != null) {
+					mainContainer.style.borderColor = `${hsvCurrentColor.value}`;
+				} else {
+					mainContainer.style.borderColor = `black`;
+					
+				}
+				break;
+		}
 
 		sectionArray[i].classList.add('make-section-visible');
 
@@ -400,7 +489,21 @@ rgbConvertBtn.onclick = function (e) {
 		greenVal < 0 || greenVal > 255 || (!greenVal && greenVal != 0) ||
 		blueVal < 0 || blueVal > 255 || (!blueVal && blueVal != 0)) {
 		rgbOutputs.innerHTML = '';
-		console.log('The RGB Value is invalid. It should be between 0 and 255');
+		mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		rgbColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		rgbColorPickerInput.value = '';
+
+		Toastify({
+			text: "The RGB Value is invalid. It should be between 0 and 255.",
+			duration: 2000,
+			close: true,
+			gravity: "bottom",
+			position: "center",
+			backgroundColor: "#ff0033",
+			offset: {
+				y: "2rem"
+			}
+		}).showToast();
 	} else {
 		hexVal = rgbToHex(redVal, greenVal, blueVal);
 		cmykVal = rgbToCmyk(redVal, greenVal, blueVal);
@@ -435,12 +538,22 @@ rgbConvertBtn.onclick = function (e) {
 			</tbody>
 			</table>
 
+			<input type="hidden"id="rgb-current-color" value="${hexVal}">
+
 			<div class="color-box" style="background: rgb(${redVal}, ${greenVal}, ${blueVal}); height: 5rem; width:90%; margin: 0 auto;"></div>
 
 
 		`;
 
+		mainContainer.style.borderColor = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
+		rgbColorPicker.style.borderColor = `rgb(${redVal}, ${greenVal}, ${blueVal})`;
+		rgbColorPickerInput.value = `${hexVal}`;
+
+
+
 	}
+
+	
 
 }
 
@@ -450,6 +563,10 @@ rgbResetBtn.onclick = function(e) {
 	rgbBlueInput.value = '';
 
 	rgbOutputs.innerHTML = '';
+	mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+	rgbColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+	rgbColorPickerInput.value = '';
+
 }
 
 
@@ -465,7 +582,21 @@ hexConvertBtn.onclick = function(e) {
 	regTest = testPattern.test(hexVal);
 
 	if(regTest || hexVal.length != 6) {
-		console.log('The Hex Value is invalid. It should be between 0 and 9, A-F and have a length of 6!');
+		hexOutputs.innerHTML = '';
+		mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		hexColorPickerInput.value = '';
+		hexColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		Toastify({
+			text: "The HEX Value is invalid. It should be between 0 and 9, A-F and have a length of 6!.",
+			duration: 2000,
+			close: true,
+			gravity: "bottom",
+			position: "center",
+			backgroundColor: "#ff0033",
+			offset: {
+				y: "2rem"
+			}
+		}).showToast();
 	} else {
 		rgbVal = hexToRgb(hexVal);
 		cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
@@ -499,10 +630,21 @@ hexConvertBtn.onclick = function(e) {
 			</tbody>
 			</table>
 
+			<input type="hidden"id="hex-current-color" value="#${hexVal}">
+
 			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
 
 
 		`;
+
+		mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+		hexColorPicker.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+		hexColorPickerInput.value = `#${hexVal}`;
+
+
+
 
 	}
 
@@ -513,6 +655,11 @@ hexResetBtn.onclick = function(e) {
 	hexSingleInput.value = '';
 
 	hexOutputs.innerHTML = ''; 
+	mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
+	hexColorPickerInput.value = '';
+	hexColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
 }
 
 
@@ -532,8 +679,20 @@ cmykConvertBtn.onclick = function(e) {
 		yellowVal < 0 || yellowVal > 100 || (!yellowVal && yellowVal != 0) || 
 		blackVal < 0 || blackVal > 100 || (!blackVal && blackVal != 0)) {
 		cmykOutputs.innerHTML = '';
-
-		console.log('The CMYK Value is invlaid. It should be between 0 and 100%.');
+		mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		cmykColorPickerInput.value = '';
+		cmykColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		Toastify({
+			text: "The CMYK Value is invlaid. It should be between 0 and 100%.",
+			duration: 2000,
+			close: true,
+			gravity: "bottom",
+			position: "center",
+			backgroundColor: "#ff0033",
+			offset: {
+				y: "2rem"
+			}
+		}).showToast();
 	} else {
 
 		rgbVal = cmykToRgb(cyanVal, magentaVal, yellowVal, blackVal);
@@ -570,10 +729,19 @@ cmykConvertBtn.onclick = function(e) {
 			</tbody>
 			</table>
 
+			<input type="hidden"id="cmyk-current-color" value="${hexVal}">
+
+
 			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
 
 
 		`;
+
+		mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+		cmykColorPicker.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+		cmykColorPickerInput.value = `${hexVal}`;
+
 	}
 
 
@@ -587,6 +755,11 @@ cmykResetBtn.onclick = function(e) {
 	cmykBlackInput.value = '';
 
 	cmykOutputs.innerHTML = '';
+	mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
+	cmykColorPickerInput.value = '';
+	cmykColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
 }
 
 //handling FROM HSL conversion
@@ -602,8 +775,21 @@ hslConvertBtn.onclick = function (e) {
 		saturationVal < 0 || saturationVal > 100 || (!saturationVal && saturationVal != 0) ||
 		lightnessVal < 0 || lightnessVal > 100 || (!lightnessVal && lightnessVal != 0)) {
 			hslOutputs.innerHTML = '';
+		mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		hslColorPickerInput.value = '';
+		hslColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
 
-		console.log('The HSL Value is invalid. It should be between 0 and 100 for Saturation and Lightness and between 0 and 360 for Hue.');
+		Toastify({
+			text: "The HSL Value is invalid. It should be between 0 and 100 for Saturation and Lightness and between 0 and 360 for Hue.",
+			duration: 2000,
+			close: true,
+			gravity: "bottom",
+			position: "center",
+			backgroundColor: "#ff0033",
+			offset: {
+				y: "2rem"
+			}
+		}).showToast();
 	} else {
 		rgbVal = hslToRgb(hueVal, saturationVal, lightnessVal);
 		hexVal = rgbToHex(rgbVal[0], rgbVal[1], rgbVal[2]);
@@ -638,10 +824,19 @@ hslConvertBtn.onclick = function (e) {
 			</tbody>
 			</table>
 
+			<input type="hidden"id="hsl-current-color" value="${hexVal}">
+
+
 			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
 
 
 		`;
+
+		mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+		hslColorPicker.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+		hslColorPickerInput.value = `${hexVal}`;
+
 
 	}
 
@@ -653,6 +848,11 @@ hslResetBtn.onclick = function(e) {
 	hslLightnessInput.value = '';
 
 	hslOutputs.innerHTML = '';
+	mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
+	hslColorPickerInput.value = '';
+	hslColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
 
 }
 
@@ -672,7 +872,21 @@ hsvConvertBtn.onclick = function(e) {
 		saturationVal < 0 || saturationVal > 100 || (!saturationVal && saturationVal != 0) ||
 		valueVal < 0 || valueVal > 100 || (!valueVal && valueVal != 0)) {
 		hsvOutputs.innerHTML = '';
-		console.log('The HSV Value is invalid. It should be between 0 and 100 for Saturation and Lightness and between 0 and 360 for Hue.');
+		mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+		hsvColorPickerInput.value = '';
+		hsvColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
+		Toastify({
+			text: "TThe HSV Value is invalid. It should be between 0 and 100 for Saturation and Lightness and between 0 and 360 for Hue.",
+			duration: 2000,
+			close: true,
+			gravity: "bottom",
+			position: "center",
+			backgroundColor: "#ff0033",
+			offset: {
+				y: "2rem"
+			}
+		}).showToast();
 	} else {
 		rgbVal = hsvToRgb(hueVal, saturationVal, valueVal);
 		hexVal = rgbToHex(rgbVal[0], rgbVal[1], rgbVal[2]);
@@ -707,10 +921,19 @@ hsvConvertBtn.onclick = function(e) {
 			</tbody>
 			</table>
 
+			<input type="hidden"id="hsv-current-color" value="${hexVal}">
+
+
 			<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
 
 
 		`;
+
+		mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+		hsvColorPicker.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+		hsvColorPickerInput.value = `${hexVal}`;
+
 
 	}
 }
@@ -723,5 +946,321 @@ hsvResetBtn.onclick = function(e) {
 	hsvValueInput.value = '';
 
 	hsvOutputs.innerHTML = '';
+	mainContainer.style.borderColor = `rgb(${0}, ${0}, ${0})`; 
+
+	hsvColorPickerInput.value = '';
+	hsvColorPicker.style.borderColor = `rgb(${0}, ${0}, ${0})`;
+
+
+}
+
+
+
+rgbColorPickerInput.oninput = function() {
+	let rgbVal, hexVal, cmykVal, hslVal, hsvVal;
+
+	hexVal = rgbColorPickerInput.value;
+	hexVal = hexVal.slice(1, 7);
+	rgbVal = hexToRgb(hexVal);
+	cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+	//change the number input
+	rgbRedInput.value = rgbVal[0]
+	rgbGreenInput.value = rgbVal[1];
+	rgbBlueInput.value = rgbVal[2];
+
+	rgbColorPicker.style.borderColor = `#${hexVal}`;
+
+	rgbOutputs.innerHTML = ` 
+
+		<h5>CONVERTED COLOR VALUES</h5>
+
+		<table>
+		<thead>
+		<td>Model</td>
+		<td>Value</td>
+		</thead>
+		<tbody>
+	
+		<tr>
+			<td><b>HEX: </b></td>  
+			<td>#${hexVal}</td>
+		</tr>
+		<tr>
+			<td><b>CMYK: </b></td> 
+			<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+		</tr>
+		<tr>
+			<td><b>HSL: </b></td> 
+			<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+		</tr>
+		<tr>
+			<td><b>HSV = HSB: </b></td> 
+			<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+		</tr>
+		</tbody>
+		</table>
+
+		<input type="hidden"id="rgb-current-color" value="#${hexVal}">
+
+		<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+	`;
+
+	mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+
+
+
+}
+
+
+
+hexColorPickerInput.oninput = function() {
+	let rgbVal, hexVal, cmykVal, hslVal, hsvVal;
+
+	hexVal = hexColorPickerInput.value;
+	hexVal = hexVal.slice(1, 7);
+	rgbVal = hexToRgb(hexVal);
+	cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+	//change the hex input
+	hexSingleInput.value = `${hexVal}`;
+
+	hexColorPicker.style.borderColor = `#${hexVal}`;
+
+	hexOutputs.innerHTML = ` 
+
+		<h5>CONVERTED COLOR VALUES</h5>
+
+		<table>
+		<thead>
+		<td>Model</td>
+		<td>Value</td>
+		</thead>
+		<tbody>
+		<tr>
+			<td><b>RGB: </b></td>  
+			<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]}</td>
+		</tr>
+		
+		<tr>
+			<td><b>CMYK: </b></td> 
+			<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+		</tr>
+		<tr>
+			<td><b>HSL: </b></td> 
+			<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+		</tr>
+		<tr>
+			<td><b>HSV = HSB: </b></td> 
+			<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+		</tr>
+		</tbody>
+		</table>
+
+		<input type="hidden"id="hex-current-color" value="#${hexVal}">
+
+		<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+	`;
+
+	mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+
+
+
+}
+
+
+cmykColorPickerInput.oninput = function() {
+	let rgbVal, hexVal, cmykVal, hslVal, hsvVal;
+
+	hexVal = cmykColorPickerInput.value;
+	hexVal = hexVal.slice(1, 7);
+	rgbVal = hexToRgb(hexVal);
+	cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+	//change the cyan input
+	cmykCyanInput.value = cmykVal[0];
+	cmykMagentaInput.value = cmykVal[1];
+	cmykYellowInput.value = cmykVal[2];
+	cmykBlackInput.value = cmykVal[3];
+
+
+	cmykColorPicker.style.borderColor = `#${hexVal}`;
+
+	cmykOutputs.innerHTML = ` 
+
+		<h5>CONVERTED COLOR VALUES</h5>
+
+		<table>
+		<thead>
+		<td>Model</td>
+		<td>Value</td>
+		</thead>
+		<tbody>
+		<tr>
+			<td><b>RGB: </b></td>  
+			<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]}</td>
+		</tr>
+		<tr>
+			<td><b>HEX: </b></td>  
+			<td>#${hexVal}</td>
+		</tr>
+		
+		<tr>
+			<td><b>HSL: </b></td> 
+			<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+		</tr>
+		<tr>
+			<td><b>HSV = HSB: </b></td> 
+			<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+		</tr>
+		</tbody>
+		</table>
+
+		<input type="hidden"id="cmyk-current-color" value="#${hexVal}">
+
+		<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+	`;
+
+	mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+
+
+}
+
+
+
+
+hslColorPickerInput.oninput = function() {
+	let rgbVal, hexVal, cmykVal, hslVal, hsvVal;
+
+	hexVal = hslColorPickerInput.value;
+	hexVal = hexVal.slice(1, 7);
+	rgbVal = hexToRgb(hexVal);
+	cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+	//change the cyan input
+	hslHueInput.value = hslVal[0];
+	hslSaturationInput.value = hslVal[1];
+	hslLightnessInput.value = hslVal[2];
+
+
+	hslColorPicker.style.borderColor = `#${hexVal}`;
+
+	hslOutputs.innerHTML = ` 
+
+		<h5>CONVERTED COLOR VALUES</h5>
+
+		<table>
+		<thead>
+		<td>Model</td>
+		<td>Value</td>
+		</thead>
+		<tbody>
+		<tr>
+			<td><b>RGB: </b></td>  
+			<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]}</td>
+		</tr>
+		<tr>
+			<td><b>HEX: </b></td>  
+			<td>#${hexVal}</td>
+		</tr>
+		<tr>
+			<td><b>CMYK: </b></td> 
+			<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+		</tr>
+		<tr>
+			<td><b>HSV = HSB: </b></td> 
+			<td>${hsvVal[0]} | ${hsvVal[1]} | ${hsvVal[2]} </td>
+		</tr>
+		</tbody>
+		</table>
+
+		<input type="hidden"id="hsl-current-color" value="#${hexVal}">
+
+		<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+	`;
+
+	mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+
+}
+
+
+
+
+hsvColorPickerInput.oninput = function() {
+	let rgbVal, hexVal, cmykVal, hslVal, hsvVal;
+
+	hexVal = hsvColorPickerInput.value;
+	hexVal = hexVal.slice(1, 7);
+	rgbVal = hexToRgb(hexVal);
+	cmykVal = rgbToCmyk(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hslVal = rgbToHsl(rgbVal[0], rgbVal[1], rgbVal[2]);
+	hsvVal = rgbToHsv(rgbVal[0], rgbVal[1], rgbVal[2]);
+
+	//change the cyan input
+	hsvHueInput.value = hsvVal[0];
+	hsvSaturationInput.value = hsvVal[1];
+	hsvValueInput.value = hsvVal[2];
+
+	hsvColorPicker.style.borderColor = `#${hexVal}`;
+
+	hsvOutputs.innerHTML = ` 
+
+		<h5>CONVERTED COLOR VALUES</h5>
+
+		<table>
+		<thead>
+		<td>Model</td>
+		<td>Value</td>
+		</thead>
+		<tbody>
+		<tr>
+			<td><b>RGB: </b></td>  
+			<td>${rgbVal[0]} | ${rgbVal[1]} | ${rgbVal[2]}</td>
+		</tr>
+		<tr>
+			<td><b>HEX: </b></td>  
+			<td>#${hexVal}</td>
+		</tr>
+		<tr>
+			<td><b>CMYK: </b></td> 
+			<td>${cmykVal[0]} | ${cmykVal[1]} | ${cmykVal[2]} | ${cmykVal[3]} </td>
+		</tr>
+		<tr>
+			<td><b>HSL: </b></td> 
+			<td>${hslVal[0]} | ${hslVal[1]} | ${hslVal[2]} </td>
+		</tr>
+		</tbody>
+		</table>
+
+		<input type="hidden"id="hsv-current-color" value="#${hexVal}">
+
+		<div class="color-box" style="background: rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]}); height: 5rem; width:90%; margin: 0 auto;"></div>
+
+
+	`;
+
+	mainContainer.style.borderColor = `rgb(${rgbVal[0]}, ${rgbVal[1]}, ${rgbVal[2]})`;
+
+
 
 }
