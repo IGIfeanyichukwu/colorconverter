@@ -16,16 +16,16 @@ Color Converter is open source licensed under the MIT license.
 
 ## Contributing
 
-Color Converter is built with vanillaJS. If you happen to find any bug while using this app or you have a features request, do well to [create an issue](https://github.com/IGIfeanyichukwu/colorconverter/issues) on it.
+Color Converter is built with vanillaJS. If you happen to find any bug while using this app or you have a features request, do well to [create an issue](https://github.com/IamGideonIdoko/colorconverter/issues) on it.
 
 Clone the repository 
 
 ```bash
-    git clone https://github.com/IGIfeanyichukwu/colorconverter.git
+    git clone https://github.com/IamGideonIdoko/colorconverter.git
 ```
 
-[Pull requests](https://github.com/IGIfeanyichukwu/colorconverter/pulls) are highly welcome.
+[Pull requests](https://github.com/IamGideonIdoko/colorconverter/pulls) are highly welcome.
 
 
 ### Author
-[Ifeanyichuwku Gideon Idoko (Ifex)](https://ig-ifex.netlify.app)
+[Gideon Idoko](https://github.com/IamGideonIdoko)
